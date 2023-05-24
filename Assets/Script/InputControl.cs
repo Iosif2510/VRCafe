@@ -12,10 +12,17 @@ public class InputControl : MonoBehaviour
     
     public GameObject controlUI;
     // public SteamVR_LaserPointer laserPointer;
+
+    private Rigidbody rigidbody;
     
     public SteamVR_Action_Boolean Menu;
     public SteamVR_Action_Vector2 joyStick;
-    
+
+    private void Awake()
+    {
+        rigidbody = GetComponent<Rigidbody>();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -25,7 +32,7 @@ public class InputControl : MonoBehaviour
     private void FixedUpdate()
     {
         Vector3 moveDir = myHead.transform.TransformDirection(new Vector3(joyStick.axis.x, 0, joyStick.axis.y));
-        transform.position += Vector3.ProjectOnPlane(2.0f * Time.deltaTime * moveDir, Vector3.up);
+        rigidbody.MovePosition(rigidbody.position + Vector3.ProjectOnPlane(2.0f * Time.deltaTime * moveDir, Vector3.up));
     }
 
     private void ShowMenu()
