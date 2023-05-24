@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Valve.VR.InteractionSystem;
 
 public class ControlUI : MonoBehaviour
 {
@@ -24,9 +25,9 @@ public class ControlUI : MonoBehaviour
     private List<Transform> lightParentList;
     private Transform currentLightParent = null;
 
-    [SerializeField] private Button placeButtonPrefab;
+    [SerializeField] private UIElement placeButtonPrefab;
 
-    private List<Button> placeButtons = new List<Button>();
+    private List<UIElement> placeButtons = new List<UIElement>();
 
     private void Awake()
     {
@@ -58,10 +59,10 @@ public class ControlUI : MonoBehaviour
         
         foreach (var parent in lightParentList)
         {
-            Button newButton = Instantiate(placeButtonPrefab, buttonsLayout);
+            UIElement newButton = Instantiate(placeButtonPrefab, buttonsLayout);
             newButton.GetComponentInChildren<TextMeshProUGUI>().text = parent.gameObject.name;
             placeButtons.Add(newButton);
-            newButton.onClick.AddListener(() => SetSlider(parent));
+            newButton.onHandClick.AddListener((hand) => SetSlider(parent));
             currentLightParent = parent;
         }
     }
@@ -70,8 +71,8 @@ public class ControlUI : MonoBehaviour
     {
         placeLabel.text = lightParent.gameObject.name;
 
-        lightRangeSlider.value = lightControl.GetLightRange(lightParent) / 64;
-        lightIntensitySlider.value = lightControl.GetLightIntensity(lightParent) / 2;
+        lightRangeSlider.value = lightControl.GetLightRange(lightParent);
+        lightIntensitySlider.value = lightControl.GetLightIntensity(lightParent);
 
         Vector3 hsvValue = lightControl.GetLightColorHSV(lightParent);
         hueSlider.value = hsvValue.x;
@@ -80,12 +81,12 @@ public class ControlUI : MonoBehaviour
         
         lightRangeSlider.onValueChanged.AddListener((newValue) =>
         {
-            lightControl.SetLightRange(lightParent, newValue * 64);
+            lightControl.SetLightRange(lightParent, newValue);
         });
         
         lightIntensitySlider.onValueChanged.AddListener((newValue) =>
         {
-            lightControl.SetLightIntensity(lightParent, newValue * 2);
+            lightControl.SetLightIntensity(lightParent, newValue);
         });
         
         hueSlider.onValueChanged.AddListener((newValue) =>
