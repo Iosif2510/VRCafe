@@ -10,8 +10,8 @@ public class InputControl : MonoBehaviour
 {
     public Camera myHead;
     
-    public ControlUI controlUI;
-    public SteamVR_LaserPointer laserPointer;
+    public GameObject controlUI;
+    // public SteamVR_LaserPointer laserPointer;
     
     public SteamVR_Action_Boolean Menu;
     public SteamVR_Action_Vector2 joyStick;
@@ -32,13 +32,13 @@ public class InputControl : MonoBehaviour
     {
         if (Menu.GetStateDown(SteamVR_Input_Sources.Any))
         {
-            controlUI.gameObject.SetActive(true);
+            controlUI.SetActive(true);
             // laserPointer.active = true;
             Debug.Log("Button Down");
         }
         else if (Menu.GetStateUp(SteamVR_Input_Sources.Any))
         {
-            controlUI.gameObject.SetActive(false);
+            controlUI.SetActive(false);
             // laserPointer.active = false;
             Debug.Log("Button Up");
         }
