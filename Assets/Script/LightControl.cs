@@ -38,7 +38,7 @@ public class LightControl : MonoBehaviour
     {
         foreach (var lightBulb in lightParent.GetComponentsInChildren<Light>())
         {
-            lightBulb.intensity = range;
+            lightBulb.range = range;
         }    
     }
 

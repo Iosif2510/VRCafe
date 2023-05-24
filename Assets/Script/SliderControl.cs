@@ -10,7 +10,7 @@ public class SliderControl : MonoBehaviour
 
     private float minValue;
     private float maxValue;
-    private float incrementPortion;
+    private float incrementPortion = 20;
 
     private void Awake()
     {
